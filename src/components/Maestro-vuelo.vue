@@ -2,10 +2,8 @@
   <div style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
       <li><h2><strong>Vuelos</strong></h2></li>
-      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Vuelo in Vuelos" @click="vueloSelected(Vuelos.Id)">
-        <span class="glyphicon glyphicon-eye-open"></span>
-        &nbsp;
-        {{Vuelo.Nombre }}</li>
+      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Vuelo in Vuelos" @click="vueloSelected(Vuelo.Id)">
+        {{Vuelo.CodigoVuelo}}</li>
     </ul>
   </div>
 </template>

@@ -30,7 +30,7 @@ export default {
   mounted: function() {
     EventBus.$on('showMessage', function(message) {
       this.showMessage(message);
-      setTimeout(this.hideMessage, 1500)
+      setTimeout(this.hideMessage, 2500)
     }.bind(this));
   }
 

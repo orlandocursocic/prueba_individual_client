@@ -3,9 +3,7 @@
     <ul class="w3-ul w3-card-4">
       <li><h2><strong>Aeropuertos</strong></h2></li>
       <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Aeropuerto in Aeropuertos" @click="aeropuertoSelected(Aeropuerto.Id)">
-        <span class="glyphicon glyphicon-eye-open"></span>
-        &nbsp;
-        {{Aeropuerto.Nombre }}</li>
+        {{Aeropuerto.Nombre}}</li>
     </ul>
   </div>
 </template>
