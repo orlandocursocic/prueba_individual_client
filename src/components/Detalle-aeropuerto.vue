@@ -3,21 +3,20 @@
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
       <label class="w3-text" for="nombre"> Nombre </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Aeropuerto.Nombre"></textarea>
       <br>
       <label class="w3-text" for="desc"> Número de Terminales </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="numeric"
+      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="numeric"
       name="desc" value="numTerminales" :disabled="!editing && !addingNew" v-model="Aeropuerto.numTerminales"></textarea>
       <br>
       <label class="w3-text" for="desc"> Ciudad </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="desc" value="Ciudad" :disabled="!editing && !addingNew" v-model="Aeropuerto.Ciudad"></textarea>
       <br>
       <label class="w3-text" for="desc"> País </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="desc" value="Pais" :disabled="!editing && !addingNew" v-model="Aeropuerto.Pais"></textarea>
-      <br>
     </div>
 
     <br>
