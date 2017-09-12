@@ -2,20 +2,24 @@
   <div class="w3-container w3-card-4" style="min-width:300px; display:inline-block; vertical-align:top">
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
-      <label class="w3-text" for="nombre"> Nombre </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
-      name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Aeropuerto.Nombre"></textarea>
-      <br>
-      <label class="w3-text" for="desc"> Número de Terminales </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="numeric"
-      name="desc" value="numTerminales" :disabled="!editing && !addingNew" v-model="Aeropuerto.numTerminales"></textarea>
-      <br>
+      <div :class="nameValidationClasses">
+        <label class="control-label" for="nombre"> Nombre </label>
+        <textarea class="form-control" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
+        name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Aeropuerto.Nombre"></textarea>
+        <p v-if="nameError != ''" class="help-block"> {{nameError}} </p>
+      </div>
+      <div :class="numTermValidationClasses">
+        <label class="control-label" for="desc"> Número de Terminales </label>
+        <textarea class="form-control" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
+        name="desc" value="numTerminales" :disabled="!editing && !addingNew" v-model="Aeropuerto.numTerminales"></textarea>
+        <p v-if="numTermError != ''" class="help-block"> {{numTermError}} </p>
+      </div>
       <label class="w3-text" for="desc"> Ciudad </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
       name="desc" value="Ciudad" :disabled="!editing && !addingNew" v-model="Aeropuerto.Ciudad"></textarea>
       <br>
       <label class="w3-text" for="desc"> País </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
       name="desc" value="Pais" :disabled="!editing && !addingNew" v-model="Aeropuerto.Pais"></textarea>
     </div>
 
@@ -85,14 +89,71 @@ export default {
     'app-icon' : AppIcon,
     'infomessage' : InfoMessage
   },
+  computed: {
+    modifiedNombre: function() {
+      if (this.modified.Nombre || this.Aeropuerto.Nombre != this.AeropuertoCopia.Nombre)
+      {
+        this.modified.Nombre = true;
+        return true;
+      }
+      return false;
+    },
+    modifiedNumTerms: function() {
+      if (this.modified.numTerminales || this.Aeropuerto.numTerminales != this.AeropuertoCopia.numTerminales)
+      {
+        this.modified.numTerminales = true;
+        return true;
+      }
+      return false;
+    },
+    nameError: function(){
+      if(this.modified.Nombre){
+        var val = this.Aeropuerto.Nombre.trim();
 
+        if (val == ''){
+          return 'El campo es obligatorio'
+        }
+      }
+      return '';
+    },
+    nameValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.nameError}
+      ];
+    },
+    numTermError: function(){
+      if(this.modified.numTerminales){
+        var val = this.Aeropuerto.numTerminales;
+
+        if (val == ''){
+          return 'El campo es obligatorio'
+        }
+
+        if(!this.isInt(val)) {
+          return 'El campo debe ser un número entero'
+        }
+
+        if(val < 1) {
+          return 'El campo debe ser mayor que 1.'
+        }
+      }
+      return '';
+    },
+    numTermValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.numTermError}
+      ];
+    },
+  },
   methods: {
     validateNew: function() {
       let mensaje ='';
       if(this.Aeropuerto.Nombre == '') {
         mensaje = 'El nombre del aeuropuerto no puede estar vacío.';
         EventBus.$emit('showMessage', mensaje);
-      } else if(this.isNumeric(this.Aeropuerto.numTerminales) || this.Aeropuerto.numTerminales < 1) {
+      } else if(!this.isInt(this.Aeropuerto.numTerminales) || this.Aeropuerto.numTerminales < 1) {
         mensaje = 'El número de terminales del aeropuerto no puede ser menor que 0.';
         EventBus.$emit('showMessage', mensaje);
       } else if(this.Aeropuerto.Ciudad == '') {
@@ -165,9 +226,10 @@ export default {
       this.Aeropuerto.Ciudad = this.AeropuertoCopia.Ciudad;
       this.Aeropuerto.Pais = this.AeropuertoCopia.Pais;
       this.addingNew = false;
+      this.cleanModified();
     },
     edit: function () {
-       this.AeropuertoCopia.Nombre = this.Aeropuerto.Nombre;
+      this.AeropuertoCopia.Nombre = this.Aeropuerto.Nombre;
       this.AeropuertoCopia.numTerminales = this.Aeropuerto.numTerminales;
       this.AeropuertoCopia.Ciudad = this.Aeropuerto.Ciudad;
       this.AeropuertoCopia.Pais = this.Aeropuerto.Pais;
@@ -179,6 +241,7 @@ export default {
       this.Aeropuerto.Ciudad = this.AeropuertoCopia.Ciudad;
       this.Aeropuerto.Pais = this.AeropuertoCopia.Pais;
       this.editing = false;
+      this.cleanModified();
     },
     cleanForm: function() {
       this.Aeropuerto.Id = '';
@@ -186,6 +249,18 @@ export default {
       this.Aeropuerto.numTerminales = '';
       this.Aeropuerto.Ciudad = '';
       this.Aeropuerto.Pais = '';
+
+      this.Aeropuerto.Id = null;
+      this.Aeropuerto.Nombre = null;
+      this.Aeropuerto.numTerminales = null;
+      this.Aeropuerto.Ciudad = null;
+      this.Aeropuerto.Pais = null;
+    },
+    cleanModified: function() {
+      this.modified.Nombre = false;
+      this.modified.numTerminales = false;
+      this.modified.Ciudad = false;
+      this.modified.Pais = false;
     },
     create: function () {
       var _this = this;
@@ -280,6 +355,12 @@ export default {
             return {
               editing: false,
               addingNew: false,
+              modified: {
+                Nombre: false,
+                numTerminales: false,
+                Ciudad: false,
+                Pais: false
+              },
               Aeropuerto: {
                 Id: '',
                 Nombre: '',
@@ -288,11 +369,11 @@ export default {
                 Pais: ''
               },
               AeropuertoCopia: {
-                Id: '',
-                Nombre: '',
-                numTerminales: '',
-                Ciudad: '',
-                Pais: ''
+                Id: null,
+                Nombre: null,
+                numTerminales: null,
+                Ciudad: null,
+                Pais: null
               }
             }
           },

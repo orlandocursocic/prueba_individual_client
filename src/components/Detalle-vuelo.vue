@@ -3,19 +3,19 @@
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Vuelo: </strong>{{Vuelo.CodigoVuelo}}</h3>
       <label class="w3-text" for="codVuelo"> Código de Vuelo </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="codVuelo" value="codVuelo" :disabled="!editing && !addingNew" v-model="Vuelo.CodigoVuelo"></textarea>
       <br>
       <label class="w3-text" for="companyia"> Compañía </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="companyia" value="companyia" :disabled="!editing && !addingNew" v-model="Vuelo.Companyia"></textarea>
       <br>
       <label class="w3-text" for="origin"> Aeropuerto de origen </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="origin" value="origin" :disabled="!editing && !addingNew" v-model="Vuelo.Origen"></textarea>
       <br>
       <label class="w3-text" for="destination"> Aeropuerto de destino </label>
-      <textarea class="w3-input w3-border" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
       name="destination" value="destination" :disabled="!editing && !addingNew" v-model="Vuelo.Destino"></textarea>
       <br>
       <label class="w3-text" for="fechaSalida"> Fecha y hora de Salida </label>
@@ -25,6 +25,7 @@
       <label class="w3-text" for="fechaLlegada"> Fecha y hora de Llegada</label>
       <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="datetime-local"
       name="fechaLlegada" value="fechaLlegada" :disabled="!editing && !addingNew" v-model="Vuelo.FechaLlegada">
+      <br>
     </div>
 
     <br>
