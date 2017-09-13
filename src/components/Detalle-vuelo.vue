@@ -1,23 +1,31 @@
 <template>
-  <div class="w3-container w3-card-4" style="min-width:300px; display:inline-block; vertical-align:top">
+  <div class="w3-container w3-card-4" style="min-width:500px; display:inline-block; vertical-align:top">
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Vuelo: </strong>{{Vuelo.CodigoVuelo}}</h3>
-      <label class="w3-text" for="codVuelo"> Código de Vuelo </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
-      name="codVuelo" value="codVuelo" :disabled="!editing && !addingNew" v-model="Vuelo.CodigoVuelo"></textarea>
-      <br>
-      <label class="w3-text" for="companyia"> Compañía </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
-      name="companyia" value="companyia" :disabled="!editing && !addingNew" v-model="Vuelo.Companyia"></textarea>
-      <br>
-      <label class="w3-text" for="origin"> Aeropuerto de origen </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
-      name="origin" value="origin" :disabled="!editing && !addingNew" v-model="Vuelo.Origen"></textarea>
-      <br>
-      <label class="w3-text" for="destination"> Aeropuerto de destino </label>
-      <textarea class="w3-input w3-border" rows="2" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis" type="string"
-      name="destination" value="destination" :disabled="!editing && !addingNew" v-model="Vuelo.Destino"></textarea>
-      <br>
+      <div :class="codigoVueloValidationClasses">
+        <label class="control-label" for="codVuelo"> Código de Vuelo </label>
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+        name="codVuelo" value="codVuelo" :disabled="!editing && !addingNew" v-model="Vuelo.CodigoVuelo"></textarea>
+        <p v-if="codigoVueloError != ''" class="help-block"> {{codigoVueloError}} </p>
+      </div>
+      <div :class="companyiaValidationClasses">
+        <label class="control-label" for="companyia"> Compañía </label>
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+        name="companyia" value="companyia" :disabled="!editing && !addingNew" v-model="Vuelo.Companyia"></textarea>
+        <p v-if="companyiaError != ''" class="help-block"> {{companyiaError}} </p>
+      </div>
+      <div :class="origenValidationClasses">
+        <label class="control-label" for="origin"> Aeropuerto de origen </label>
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+        name="origin" value="origin" :disabled="!editing && !addingNew" v-model="Vuelo.Origen"></textarea>
+        <p v-if="origenError != ''" class="help-block"> {{origenError}} </p>
+      </div>
+      <div :class="destinoValidationClasses">
+        <label class="control-label" for="destination"> Aeropuerto de destino </label>
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
+        name="destination" value="destination" :disabled="!editing && !addingNew" v-model="Vuelo.Destino"></textarea>
+        <p v-if="destinoError != ''" class="help-block"> {{destinoError}} </p>
+      </div>
       <label class="w3-text" for="fechaSalida"> Fecha y hora de Salida </label>
       <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="datetime-local"
       name="fechaSalida" value="fechaSalida" :disabled="!editing && !addingNew" v-model="Vuelo.FechaSalida">
