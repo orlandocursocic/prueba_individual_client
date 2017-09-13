@@ -481,7 +481,6 @@ export default {
                 Ciudad: false,
                 Pais: false
               },
-              anyModification: false,
               modified: {
                 Nombre: false,
                 numTerminales: false,

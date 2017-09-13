@@ -26,34 +26,36 @@
         name="destination" value="destination" :disabled="!editing && !addingNew" v-model="Vuelo.Destino"></textarea>
         <p v-if="destinoError != ''" class="help-block"> {{destinoError}} </p>
       </div>
-      <label class="w3-text" for="fechaSalida"> Fecha y hora de Salida </label>
-      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="datetime-local"
-      name="fechaSalida" value="fechaSalida" :disabled="!editing && !addingNew" v-model="Vuelo.FechaSalida">
-      <br>
-      <label class="w3-text" for="fechaLlegada"> Fecha y hora de Llegada</label>
-      <input class="w3-input w3-border" style="background: white; overflow: hidden; text-overflow: ellipsis" type="datetime-local"
-      name="fechaLlegada" value="fechaLlegada" :disabled="!editing && !addingNew" v-model="Vuelo.FechaLlegada">
-      <br>
+      <div :class="fechaSalidaValidationClasses">
+        <label class="control-label" for="fechaSalida"> Fecha y hora de Salida </label>
+        <input class="form-control" style="overflow: hidden; text-overflow: ellipsis" type="datetime-local"
+        name="fechaSalida" value="fechaSalida" :disabled="!editing && !addingNew" v-model="Vuelo.FechaSalida">
+        <p v-if="fechaSalidaError != ''" class="help-block"> {{fechaSalidaError}} </p>
+      </div>
+      <div :class="fechaLlegadaValidationClasses">
+        <label class="control-label" for="fechaLlegada"> Fecha y hora de Llegada</label>
+        <input class="form-control" style="overflow: hidden; text-overflow: ellipsis" type="datetime-local"
+        name="fechaLlegada" value="fechaLlegada" :disabled="!editing && !addingNew" v-model="Vuelo.FechaLlegada">
+        <p v-if="fechaLlegadaError != ''" class="help-block"> {{fechaLlegadaError}} </p>
+      </div>
     </div>
-
-    <br>
 
     <div>
       <template v-if="!addingNew">
         <div style="float: left">
           <button type="button" class="btn btn-default btn-sm" title="Nuevo" @click="editNew" :disabled="editing">
-            <app-icon img="plus"></app-icon>
+            <app-icon img="plus"></app-icon> Nuevo
           </button>
         </div>
       </template>
 
       <template v-else>
         <div style="float: left">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateNew">
-            <app-icon img="ok"></app-icon>
+          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateNew" :disabled="!allModified">
+            <app-icon img="ok"></app-icon> Confirmar
           </button>
           <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discardNew">
-            <app-icon img="remove"></app-icon>
+            <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>
       </template>
@@ -61,21 +63,21 @@
       <template v-if="!editing">
         <div style="float: right">
           <button type="button" class="btn btn-default btn-sm" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
-            <app-icon img="edit"></app-icon>
+            <app-icon img="edit"></app-icon> Editar
           </button>
           <button type="button" class="btn btn-default btn-sm" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
-            <app-icon img="trash"></app-icon>
+            <app-icon img="trash"></app-icon> Eliminar
           </button>
         </div>
       </template>
 
       <template v-else>
         <div style="float: right">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateUpdate">
-            <app-icon img="ok"></app-icon>
+          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateUpdate" :disabled="!anyModified">
+            <app-icon img="ok"></app-icon> Confirmar
           </button>
           <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discard">
-            <app-icon img="remove"></app-icon>
+            <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>
       </template>
@@ -102,72 +104,209 @@ export default {
     'app-icon' : AppIcon,
     'infomessage' : InfoMessage
   },
+  computed: {
+    anyModified: function() {
+      if (this.modified.CodigoVuelo || this.modified.Companyia || this.modified.Origen || this.modified.Destino || this.modified.FechaSalida || this.modified.FechaLlegada) {
+        return true;
+      }
+      return false;
+    },
+    allModified: function() {
+      if (this.modified.CodigoVuelo && this.modified.Companyia && this.modified.Origen && this.modified.Destino && this.modified.FechaSalida && this.modified.FechaLlegada) {
+        return true;
+      }
+      return false;
+    },
+    codigoVueloError: function(){
+      var val = this.Vuelo.CodigoVuelo.trim();
 
+      if(this.Vuelo.CodigoVuelo != '' && this.Vuelo.CodigoVuelo != this.VueloCopia.CodigoVuelo){
+        this.modified.CodigoVuelo = true;
+      }
+
+      if(this.modified.CodigoVuelo) {
+        if (val == ''){
+          this.validated.CodigoVuelo = false;
+          return 'El campo es obligatorio'
+        }
+        this.validated.CodigoVuelo = true;
+      }
+      return '';
+    },
+    codigoVueloValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.codigoVueloError}
+      ];
+    },
+    companyiaError: function(){
+      var val = this.Vuelo.Companyia.trim();
+
+      if(this.Vuelo.Companyia != '' && this.Vuelo.Companyia != this.VueloCopia.Companyia){
+        this.modified.Companyia = true;
+      }
+
+      if(this.modified.Companyia) {
+        if (val == ''){
+          this.validated.Companyia = false;
+          return 'El campo es obligatorio'
+        }
+        this.validated.Companyia = true;
+      }
+      return '';
+    },
+    companyiaValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.companyiaError}
+      ];
+    },
+    origenError: function(){
+      var val = this.Vuelo.Origen.trim();
+
+      if(this.Vuelo.Origen != '' && this.Vuelo.Origen != this.VueloCopia.Origen){
+        this.modified.Origen = true;
+      }
+
+      if(this.modified.Origen) {
+        if (val == ''){
+          this.validated.Origen = false;
+          return 'El campo es obligatorio'
+        }
+        this.validated.Origen = true;
+      }
+      return '';
+    },
+    origenValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.origenError}
+      ];
+    },
+    destinoError: function(){
+      var val = this.Vuelo.Destino.trim();
+
+      if(this.Vuelo.Destino != '' && this.Vuelo.Destino != this.VueloCopia.Destino){
+        this.modified.Destino = true;
+      }
+
+      if(this.modified.Destino) {
+        if (val == ''){
+          this.validated.Destino = false;
+          return 'El campo es obligatorio'
+        }
+        this.validated.Destino = true;
+      }
+      return '';
+    },
+    destinoValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.destinoError}
+      ];
+    },
+    fechaSalidaError: function(){
+      var val = this.Vuelo.FechaSalida.trim();
+
+      if(this.Vuelo.FechaSalida != '' && this.Vuelo.FechaSalida != this.VueloCopia.FechaSalida){
+        this.modified.FechaSalida = true;
+      }
+
+      if(this.modified.FechaSalida) {
+        if (val == ''){
+          this.validated.FechaSalida = false;
+          return 'El campo es obligatorio'
+        }
+        this.validated.FechaSalida = true;
+      }
+      return '';
+    },
+    fechaSalidaValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.fechaSalidaError}
+      ];
+    },
+    fechaLlegadaError: function(){
+      var val = this.Vuelo.FechaLlegada.trim();
+
+      if(this.Vuelo.FechaLlegada != '' && this.Vuelo.FechaLlegada != this.VueloCopia.FechaLlegada){
+        this.modified.FechaLlegada = true;
+      }
+
+      if(this.modified.FechaLlegada) {
+        if (val == ''){
+          this.validated.FechaLlegada = false;
+          return 'El campo es obligatorio'
+        }
+        this.validated.FechaLlegada = true;
+      }
+      return '';
+    },
+    fechaLlegadaValidationClasses: function(){
+      return [
+        'form-group',
+        {'has-error': this.fechaLlegadaError}
+      ];
+    },
+  },
   methods: {
+    validatedAll: function() {
+      if (this.validated.CodigoVuelo && this.validated.Companyia && this.validated.Origen && this.validated.Destino && this.validated.FechaSalida && this.validated.FechaLlegada) {
+        return true;
+      }
+      return false;
+    },
     validateNew: function() {
-      let mensaje ='';
-      if(this.Vuelo.CodigoVuelo == '') {
-        mensaje = 'El código identificador del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.Companyia == '') {
-        mensaje = 'El nombre de la compañia del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.Origen == '') {
-        mensaje = 'El aeropuerto de origen del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.Destino == '') {
-        mensaje = 'El aeropuerto de destino del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.FechaSalida == '') {
-        mensaje = 'La fecha de salida del vuelo no puede estar vacía.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.FechaLlegada == '') {
-        mensaje = 'La fecha y hora de llegada del vuelo no pueden estar vacíos.';
-        EventBus.$emit('showMessage', mensaje);
-      } else {
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
+      if(this.validatedAll()){
         this.create();
+      } else {
+        mensaje.modalTitle = 'Error en la validación.'
+        mensaje.modalBody = 'Hay campos con valores no válidos. Por favor, asegúrese de introducirlos correctamente.';
+        EventBus.$emit('showMessage', mensaje);
       }
     },
     validateIdUpdate: function() {
-      let mensaje ='';
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
       if(this.Vuelo.Id =='' || this.Vuelo.Id < 0) {
-        mensaje = 'Seleccione un vuelo de la lista.';
+        mensaje.modalTitle = 'Formulario vacío.'
+        mensaje.modalBody = 'Seleccione un vuelo de la lista.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.edit();
       }
     },
     validateIdDelete: function() {
-      let mensaje ='';
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
       if(this.Vuelo.Id =='' || this.Vuelo.Id < 0) {
-        mensaje = 'Seleccione un vuelo de la lista.';
+        mensaje.modalTitle = 'Formulario vacío.'
+        mensaje.modalBody = 'Seleccione un vuelo de la lista.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.remove();
       }
     },
     validateUpdate: function() {
-      let mensaje ='';
-      if(this.Vuelo.CodigoVuelo == '') {
-        mensaje = 'El código identificador del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.Companyia == '') {
-        mensaje = 'El nombre de la compañia del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.Origen == '') {
-        mensaje = 'El aeropuerto de origen del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.Destino == '') {
-        mensaje = 'El aeropuerto de destino del vuelo no puede estar vacío.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.FechaSalida == '') {
-        mensaje = 'La fecha de salida del vuelo no puede estar vacía.';
-        EventBus.$emit('showMessage', mensaje);
-      } else if(this.Vuelo.FechaLlegada == '') {
-        mensaje = 'La fecha y hora de llegada del vuelo no pueden estar vacíos.';
-        EventBus.$emit('showMessage', mensaje);
-      } else {
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
+      if (this.validatedAll()) {
         this.update();
+      } else {
+        mensaje.modalTitle = 'Error en la validación.'
+        mensaje.modalBody = 'Hay campos con valores no válidos. Por favor, asegúrese de introducirlos correctamente.';
+        EventBus.$emit('showMessage', mensaje);
       }
     },
     isNumeric: function(n) {
@@ -190,6 +329,9 @@ export default {
       this.Vuelo.Destino = '';
       this.Vuelo.FechaSalida = '';
       this.Vuelo.FechaLlegada = '';
+
+      this.cleanModified();
+      this.cleanValidated();
       this.addingNew = true;
     },
     discardNew: function () {
@@ -199,7 +341,11 @@ export default {
       this.Vuelo.Destino = this.VueloCopia.Destino;
       this.Vuelo.FechaSalida = this.VueloCopia.FechaSalida;
       this.Vuelo.FechaLlegada = this.VueloCopia.FechaLlegada;
+
+      this.cleanCopy();
       this.addingNew = false;
+      this.cleanModified();
+      this.cleanValidated();
     },
     edit: function () {
       this.VueloCopia.CodigoVuelo = this.Vuelo.CodigoVuelo;
@@ -208,6 +354,8 @@ export default {
       this.VueloCopia.Destino = this.Vuelo.Destino;
       this.VueloCopia.FechaSalida = this.Vuelo.FechaSalida;
       this.VueloCopia.FechaLlegada = this.Vuelo.FechaLlegada;
+
+      this.cleanModified();
       this.editing = true;
     },
     discard: function () {
@@ -217,6 +365,8 @@ export default {
       this.Vuelo.Destino = this.VueloCopia.Destino;
       this.Vuelo.FechaSalida = this.VueloCopia.FechaSalida;
       this.Vuelo.FechaLlegada = this.VueloCopia.FechaLlegada;
+
+      this.cleanCopy();
       this.editing = false;
     },
     cleanForm: function() {
@@ -227,6 +377,41 @@ export default {
       this.Vuelo.Destino = '';
       this.Vuelo.FechaSalida = '';
       this.Vuelo.FechaLlegada = '';
+
+      this.VueloCopia.Id = '';
+      this.VueloCopia.CodigoVuelo = '';
+      this.VueloCopia.Companyia = '';
+      this.VueloCopia.Origen = '';
+      this.VueloCopia.Destino = '';
+      this.VueloCopia.FechaSalida = '';
+      this.VueloCopia.FechaLlegada = '';
+      this.cleanModified();
+      this.cleanValidated();
+    },
+    cleanCopy: function() {
+      this.VueloCopia.Id = '';
+      this.VueloCopia.CodigoVuelo = '';
+      this.VueloCopia.Companyia = '';
+      this.VueloCopia.Origen = '';
+      this.VueloCopia.Destino = '';
+      this.VueloCopia.FechaSalida = '';
+      this.VueloCopia.FechaLlegada = '';
+    },
+    cleanModified: function() {
+      this.modified.CodigoVuelo = false;
+      this.modified.Companyia = false;
+      this.modified.Origen = false;
+      this.modified.Destino = false;
+      this.modified.FechaSalida = false;
+      this.modified.FechaLlegada = false;
+    },
+    cleanValidated: function() {
+      this.validated.CodigoVuelo = false;
+      this.validated.Companyia = false;
+      this.validated.Origen = false;
+      this.validated.Destino = false;
+      this.validated.FechaSalida = false;
+      this.validated.FechaLlegada = false;
     },
     create: function () {
       var _this = this;
@@ -245,12 +430,23 @@ export default {
         })
         .done(function(data) {
           EventBus.$emit('updateListVuelo');
-          let mensaje ='Vuelo añadido con éxito.';
+          let mensaje = {
+            modalTitle: '',
+            modalBody: ''
+          };
+          mensaje.modalTitle = 'Vuelo añadido.'
+          mensaje.modalBody = 'Vuelo añadido con éxito.';
           EventBus.$emit('showMessage', mensaje);
           _this.addingNew = false;
+          _this.cleanForm();
         })
         .fail(function(data) {
-          let mensaje = 'No se pudo crear el vuelo. Revise su conexión a Internet.';
+          let mensaje = {
+            modalTitle: '',
+            modalBody: ''
+          };
+          mensaje.modalTitle = 'Acción incompleta.'
+          mensaje.modalBody = 'No se pudo crear el vuelo. Revise su conexión a Internet.';
           EventBus.$emit('showMessage', mensaje);
         });
       },
@@ -272,13 +468,23 @@ export default {
           })
           .done(function(data) {
             EventBus.$emit('updateListVuelo');
-            let mensaje ='Vuelo actualizado con éxito.';
+            let mensaje = {
+              modalTitle: '',
+              modalBody: ''
+            };
+            mensaje.modalTitle = 'Vuelo actualizado.'
+            mensaje.modalBody ='Vuelo actualizado con éxito.';
             EventBus.$emit('showMessage', mensaje);
-            _this.cleanForm();
             _this.editing = false;
+            _this.cleanForm();
           })
           .fail(function(data) {
-            let mensaje = 'No se pudo actualizar el vuelo. Revise su conexión a Internet.';
+            let mensaje = {
+              modalTitle: '',
+              modalBody: ''
+            };
+            mensaje.modalTitle = 'Acción incompleta.';
+            mensaje.modalBody = 'No se pudo actualizar el vuelo. Revise su conexión a Internet.';
             EventBus.$emit('showMessage', mensaje);
           });
         },
@@ -293,12 +499,23 @@ export default {
             .done(function(data) {
               EventBus.$emit('updateListVuelo');
               _this.cleanForm();
-              let mensaje ='Vuelo eliminado con éxito.';
+              let mensaje = {
+                modalTitle: '',
+                modalBody: ''
+              };
+              mensaje.modalTitle = 'Vuelo eliminado.';
+              mensaje.modalBody ='Vuelo eliminado con éxito.';
               EventBus.$emit('showMessage', mensaje);
               _this.editing = false;
+              _this.cleanForm();
             })
             .fail(function(data) {
-              let mensaje = 'No se pudo eliminar el vuelo. Revise su conexión a Internet.';
+              let mensaje = {
+                modalTitle: '',
+                modalBody: ''
+              };
+              mensaje.modalTitle = 'Acción incompleta';
+              mensaje.modalBody = 'No se pudo eliminar el aeropuerto. Revise su conexión a Internet.';
               EventBus.$emit('showMessage', mensaje);
             });
           },
@@ -314,16 +531,36 @@ export default {
                 _this.Vuelo = data;
               })
               .fail(function(data) {
-                let mensaje = 'No se pudo cargar los vuelos. Revise su conexión a Internet.';
+                let mensaje = {
+                  modalTitle: '',
+                  modalBody: ''
+                };
+                mensaje.modalTitle = 'Acción incompleta.'
+                mensaje.modalBody = 'No se pudo cargar los aeropuertos. Revise su conexión a Internet.';
                 EventBus.$emit('showMessage', mensaje);
               });
             },
           },
-
           data: function () {
             return {
               editing: false,
               addingNew: false,
+              validated: {
+                CodigoVuelo: false,
+                Companyia: false,
+                Origen: false,
+                Destino: false,
+                FechaSalida: false,
+                FechaLlegada: false
+              },
+              modified: {
+                CodigoVuelo: false,
+                Companyia: false,
+                Origen: false,
+                Destino: false,
+                FechaSalida: false,
+                FechaLlegada: false
+              },
               Vuelo: {
                 Id: '',
                 CodigoVuelo: '',
