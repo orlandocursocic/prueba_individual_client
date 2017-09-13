@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button type="button" class="btn btn-default btn-lg" title="Aeroperto" @click="chooseOption(options.Aeropuertos)">
+    <button type="button" class="btn btn-default" title="Aeroperto" @click="chooseOption(options.Aeropuertos)">
       <app-icon img="th-list"></app-icon> Aeropuertos
     </button>
-    <button type="button" class="btn btn-default btn-lg" title="Vuelo" @click="chooseOption(options.Vuelos)">
+    <button type="button" class="btn btn-default" title="Vuelo" @click="chooseOption(options.Vuelos)">
      <app-icon img="th-list"></app-icon> Vuelos
     </button>
   </div>

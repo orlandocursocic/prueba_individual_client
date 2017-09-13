@@ -1,7 +1,7 @@
 <template>
   <div style="min-width:400px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
-      <li><h2><strong>Vuelos</strong></h2></li>
+      <li><h3><strong>Vuelos</strong></h3></li>
       <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Vuelo in Vuelos" @click="vueloSelected(Vuelo.Id)">
         {{Vuelo.CodigoVuelo}}</li>
     </ul>
