@@ -1,51 +1,49 @@
 <template>
-  <div class="w3-container w3-card-4" style="min-width:300px; display:inline-block; vertical-align:top">
+  <div class="w3-container w3-card-4" style="min-width:500px; display:inline-block; vertical-align:top">
     <div>
       <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
       <div :class="nombreValidationClasses">
         <label class="control-label" for="nombre"> Nombre </label>
-        <textarea class="form-control" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Aeropuerto.Nombre"></textarea>
         <p v-if="nombreError != ''" class="help-block"> {{nombreError}} </p>
       </div>
       <div :class="numTermValidationClasses">
         <label class="control-label" for="desc"> Número de Terminales </label>
-        <textarea class="form-control" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="desc" value="numTerminales" :disabled="!editing && !addingNew" v-model="Aeropuerto.numTerminales"></textarea>
         <p v-if="numTermError != ''" class="help-block"> {{numTermError}} </p>
       </div>
       <div :class="ciudadValidationClasses">
         <label class="control-label" for="desc"> Ciudad </label>
-        <textarea class="form-control" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="desc" value="Ciudad" :disabled="!editing && !addingNew" v-model="Aeropuerto.Ciudad"></textarea>
         <p v-if="ciudadError != ''" class="help-block"> {{ciudadError}} </p>
       </div>
       <div :class="paisValidationClasses">
         <label class="control-label" for="desc"> País </label>
-        <textarea class="form-control" rows="1" style="background: white; resize: none; overflow: auto; text-overflow: ellipsis"
+        <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="desc" value="Pais" :disabled="!editing && !addingNew" v-model="Aeropuerto.Pais"></textarea>
         <p v-if="paisError != ''" class="help-block"> {{paisError}} </p>
       </div>
     </div>
 
-    <br>
-
     <div>
       <template v-if="!addingNew">
         <div style="float: left">
           <button type="button" class="btn btn-default btn-sm" title="Nuevo" @click="editNew" :disabled="editing">
-            <app-icon img="plus"></app-icon>
+            <app-icon img="plus"></app-icon> Nuevo
           </button>
         </div>
       </template>
 
       <template v-else>
         <div style="float: left">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateNew">
-            <app-icon img="ok"></app-icon>
+          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateNew" :disabled="!allModified">
+            <app-icon img="ok"></app-icon> Confirmar
           </button>
           <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discardNew">
-            <app-icon img="remove"></app-icon>
+            <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>
       </template>
@@ -53,21 +51,21 @@
       <template v-if="!editing">
         <div style="float: right">
           <button type="button" class="btn btn-default btn-sm" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
-            <app-icon img="edit"></app-icon>
+            <app-icon img="edit"></app-icon> Editar
           </button>
           <button type="button" class="btn btn-default btn-sm" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
-            <app-icon img="trash"></app-icon>
+            <app-icon img="trash"></app-icon> Eliminar
           </button>
         </div>
       </template>
 
       <template v-else>
         <div style="float: right">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateUpdate">
-            <app-icon img="ok"></app-icon>
+          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateUpdate" :disabled="!anyModified">
+            <app-icon img="ok"></app-icon> Confirmar
           </button>
           <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discard">
-            <app-icon img="remove"></app-icon>
+            <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>
       </template>
@@ -95,6 +93,18 @@ export default {
     'infomessage' : InfoMessage
   },
   computed: {
+    anyModified: function() {
+      if (this.modified.Nombre || this.modified.numTerminales || this.modified.Ciudad || this.modified.Pais) {
+        return true;
+      }
+      return false;
+    },
+    allModified: function() {
+      if (this.modified.Nombre && this.modified.numTerminales && this.modified.Ciudad && this.modified.Pais) {
+        return true;
+      }
+      return false;
+    },
     nombreError: function(){
       var val = this.Aeropuerto.Nombre.trim();
 
@@ -275,6 +285,7 @@ export default {
       this.AeropuertoCopia.Ciudad = this.Aeropuerto.Ciudad;
       this.AeropuertoCopia.Pais = this.Aeropuerto.Pais;
 
+      this.cleanModified();
       this.editing = true;
     },
     discard: function () {
@@ -419,6 +430,7 @@ export default {
                 Ciudad: false,
                 Pais: false
               },
+              anyModification: false,
               modified: {
                 Nombre: false,
                 numTerminales: false,
