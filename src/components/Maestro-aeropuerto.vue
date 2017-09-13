@@ -1,5 +1,5 @@
 <template>
-  <div style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
+  <div style="min-width:400px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
       <li><h2><strong>Aeropuertos</strong></h2></li>
       <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Aeropuerto in Aeropuertos" @click="aeropuertoSelected(Aeropuerto.Id)">

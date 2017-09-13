@@ -10,7 +10,7 @@
     <maestro-vuelo v-show="opcion == 'vuelos'"></maestro-vuelo>
     <detalle-vuelo v-show="opcion == 'vuelos'"></detalle-vuelo>
 
-    <infomessage style="clear:both"></infomessage>
+    <modalmessage></modalmessage>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ import MaestroAeropuerto from './components/maestro-aeropuerto.vue'
 import MaestroVuelo from './components/maestro-vuelo.vue'
 import DetalleAeropuerto from './components/Detalle-aeropuerto.vue'
 import DetalleVuelo from './components/Detalle-vuelo.vue'
-import InfoMessage from './components/InfoMessage.vue'
+import ModalMessage from './components/ModalMessage.vue'
 
 export default {
   components: {
@@ -30,7 +30,7 @@ export default {
     'maestro-vuelo' : MaestroVuelo,
     'detalle-aeropuerto' : DetalleAeropuerto,
     'detalle-vuelo' : DetalleVuelo,
-    'infomessage' : InfoMessage
+    'modalmessage' : ModalMessage
   },
 
   data: function() {

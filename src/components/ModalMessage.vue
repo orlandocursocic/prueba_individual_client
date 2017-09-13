@@ -22,11 +22,15 @@
    </div>
 </template>
 <script>
+import EventBus from './event-bus.js'
+
 export default {
-  data: {
-    modalTitle: '';
-    modalBody: '';
-    showModal: false;
+  data: function () {
+    return {
+      modalTitle: '',
+      modalBody: '',
+      showModal: false,
+    }
   },
   mounted: function() {
     EventBus.$on('showMessage', function(message) {

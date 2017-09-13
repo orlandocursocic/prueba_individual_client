@@ -212,38 +212,54 @@ export default {
       return false;
     },
     validateNew: function() {
-      let mensaje = '';
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
       if (this.validatedAll()) {
         this.create();
       } else {
-        mensaje = 'Hay campos con valores inválidos. Por favor, introdúzcalos correctamente';
+        mensaje.modalTitle = 'Error en la validación.'
+        mensaje.modalBody = 'Hay campos con valores no válidos. Por favor, asegúrese de introducirlos correctamente.';
         EventBus.$emit('showMessage', mensaje);
       }
     },
     validateIdUpdate: function() {
-      let mensaje ='';
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
       if(this.Aeropuerto.Id =='' || this.Aeropuerto.Id < 0) {
-        mensaje = 'Seleccione un aeropuerto de la lista.';
+        mensaje.modalTitle = 'Formulario vacío.'
+        mensaje.modalBody = 'Seleccione un aeropuerto de la lista.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.edit();
       }
     },
     validateIdDelete: function() {
-      let mensaje ='';
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
       if(this.Aeropuerto.Id =='' || this.Aeropuerto.Id < 0) {
-        mensaje = 'Seleccione un aeropuerto de la lista.';
+        mensaje.modalTitle = 'Formulario vacío.'
+        mensaje.modalBody = 'Seleccione un aeropuerto de la lista.';
         EventBus.$emit('showMessage', mensaje);
       } else {
         this.remove();
       }
     },
     validateUpdate: function() {
-      let mensaje ='';
+      let mensaje = {
+        modalTitle: '',
+        modalBody: ''
+      };
       if (this.validatedAll()) {
         this.update();
       } else {
-        mensaje = 'Hay campos con valores inválidos. Por favor, introdúzcalos correctamente';
+        mensaje.modalTitle = 'Error en la validación.'
+        mensaje.modalBody = 'Hay campos con valores no válidos. Por favor, asegúrese de introducirlos correctamente.';
         EventBus.$emit('showMessage', mensaje);
       }
     },
@@ -347,13 +363,23 @@ export default {
         })
         .done(function(data) {
           EventBus.$emit('updateListAeropuerto');
-          let mensaje ='Aeropuerto añadido con éxito.';
+          let mensaje = {
+            modalTitle: '',
+            modalBody: ''
+          };
+          mensaje.modalTitle = 'Aeropuerto añadido.'
+          mensaje.modalBody = 'Aeropuerto añadido con éxito.';
           EventBus.$emit('showMessage', mensaje);
           _this.addingNew = false;
           _this.cleanForm();
         })
         .fail(function(data) {
-          let mensaje = 'No se pudo crear el aeropuerto. Revise su conexión a Internet.';
+          let mensaje = {
+            modalTitle: '',
+            modalBody: ''
+          };
+          mensaje.modalTitle = 'Acción incompleta.'
+          mensaje.modalBody = 'No se pudo crear el aeropuerto. Revise su conexión a Internet.';
           EventBus.$emit('showMessage', mensaje);
         });
       },
@@ -373,13 +399,23 @@ export default {
           })
           .done(function(data) {
             EventBus.$emit('updateListAeropuerto');
-            let mensaje ='Aeropuerto actualizado con éxito.';
+            let mensaje = {
+              modalTitle: '',
+              modalBody: ''
+            };
+            mensaje.modalTitle = 'Aeropuerto actualizado.'
+            mensaje.modalBody ='Aeropuerto actualizado con éxito.';
             EventBus.$emit('showMessage', mensaje);
             _this.editing = false;
             _this.cleanForm();
           })
           .fail(function(data) {
-            let mensaje = 'No se pudo actualizar el aeropuerto. Revise su conexión a Internet.';
+            let mensaje = {
+              modalTitle: '',
+              modalBody: ''
+            };
+            mensaje.modalTitle = 'Acción incompleta.';
+            mensaje.modalBody = 'No se pudo actualizar el aeropuerto. Revise su conexión a Internet.';
             EventBus.$emit('showMessage', mensaje);
           });
         },
@@ -394,13 +430,23 @@ export default {
             .done(function(data) {
               EventBus.$emit('updateListAeropuerto');
               _this.cleanForm();
-              let mensaje ='Aeropuerto eliminado con éxito.';
+              let mensaje = {
+                modalTitle: '',
+                modalBody: ''
+              };
+              mensaje.modalTitle = 'Aeropuerto eliminado.';
+              mensaje.modalBody ='Aeropuerto eliminado con éxito.';
               EventBus.$emit('showMessage', mensaje);
               _this.editing = false;
               _this.cleanForm();
             })
             .fail(function(data) {
-              let mensaje = 'No se pudo eliminar el aeropuerto. Revise su conexión a Internet.';
+              let mensaje = {
+                modalTitle: '',
+                modalBody: ''
+              };
+              mensaje.modalTitle = 'Acción incompleta';
+              mensaje.modalBody = 'No se pudo eliminar el aeropuerto. Revise su conexión a Internet.';
               EventBus.$emit('showMessage', mensaje);
             });
           },
@@ -415,7 +461,12 @@ export default {
                 _this.Aeropuerto = data;
               })
               .fail(function(data) {
-                let mensaje = 'No se pudo cargar los aeropuertos. Revise su conexión a Internet.';
+                let mensaje = {
+                  modalTitle: '',
+                  modalBody: ''
+                };
+                mensaje.modalTitle = 'Acción incompleta.'
+                mensaje.modalBody = 'No se pudo cargar los aeropuertos. Revise su conexión a Internet.';
                 EventBus.$emit('showMessage', mensaje);
               });
             },
