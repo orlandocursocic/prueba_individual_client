@@ -1,7 +1,7 @@
 <template>
-  <div class="w3-container w3-card-4 teal lighten-5" style="min-width:700px; display:inline-block; vertical-align:top">
+  <div class="w3-container w3-card-4 teal lighten-5" style="min-width:700px; max-width:700px; display:inline-block; vertical-align:top">
     <div>
-      <h3 class="teal-text" style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
+      <h3 class="teal-text" style="overflow: hidden; text-overflow: ellipsis; max-width:700px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
       <div :class="nombreValidationClasses">
         <label class="teal-text control-label" for="nombre"> Nombre </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
