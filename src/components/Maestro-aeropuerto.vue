@@ -1,8 +1,8 @@
 <template>
-  <div style="min-width:400px; max-width:300px; display:inline-block; vertical-align:top">
+  <div class="teal lighten-5" style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
-      <li><h3><strong>Aeropuertos</strong></h3></li>
-      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Aeropuerto in Aeropuertos" @click="aeropuertoSelected(Aeropuerto.Id)">
+      <li class="teal-text"><h3><strong>Aeropuertos</strong></h3></li>
+      <li style="overflow: hidden; text-overflow: ellipsis" class="teal-text w3-hover-teal" v-for="Aeropuerto in Aeropuertos" @click="aeropuertoSelected(Aeropuerto.Id)">
         {{Aeropuerto.Nombre}}</li>
     </ul>
   </div>

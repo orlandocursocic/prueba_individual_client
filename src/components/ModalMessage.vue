@@ -9,10 +9,10 @@
                   <button type="button" class="close" @click="showModal=false">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title">{{this.modalTitle}}</h4>
+                  <h3 class="teal-text modal-title"><strong>{{this.modalTitle}}</strong></h3>
                 </div>
-                <div class="modal-body">
-                  {{this.modalBody}}
+                <div class="teal-text modal-body">
+                  <h4>{{this.modalBody}}</h4>
                 </div>
               </div>
             </div>

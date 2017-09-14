@@ -1,12 +1,14 @@
 <template>
+  <nav class="teal lighten-5">
   <div>
-    <button type="button" class="btn btn-default" title="Aeroperto" @click="chooseOption(options.Aeropuertos)">
+    <button type="button" class="waves-effect waves-light btn teal" title="Aeroperto" @click="chooseOption(options.Aeropuertos)">
       <app-icon img="th-list"></app-icon> Aeropuertos
     </button>
-    <button type="button" class="btn btn-default" title="Vuelo" @click="chooseOption(options.Vuelos)">
+    <button type="button" class="waves-effect waves-light btn teal" title="Vuelo" @click="chooseOption(options.Vuelos)">
      <app-icon img="th-list"></app-icon> Vuelos
     </button>
   </div>
+</nav>
 </template>
 
 <script>

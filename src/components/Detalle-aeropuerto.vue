@@ -1,27 +1,27 @@
 <template>
-  <div class="w3-container w3-card-4" style="min-width:500px; display:inline-block; vertical-align:top">
+  <div class="w3-container w3-card-4 teal lighten-5" style="min-width:700px; display:inline-block; vertical-align:top">
     <div>
-      <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
+      <h3 class="teal-text" style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Aeropuerto: </strong>{{Aeropuerto.Nombre}}</h3>
       <div :class="nombreValidationClasses">
-        <label class="control-label" for="nombre"> Nombre </label>
+        <label class="teal-text control-label" for="nombre"> Nombre </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="nombre" value="Nombre" :disabled="!editing && !addingNew" v-model="Aeropuerto.Nombre"></textarea>
         <p v-if="nombreError != ''" class="help-block"> {{nombreError}} </p>
       </div>
       <div :class="numTermValidationClasses">
-        <label class="control-label" for="desc"> Número de Terminales </label>
+        <label class="teal-text control-label" for="desc"> Número de Terminales </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="desc" value="numTerminales" :disabled="!editing && !addingNew" v-model="Aeropuerto.numTerminales"></textarea>
         <p v-if="numTermError != ''" class="help-block"> {{numTermError}} </p>
       </div>
       <div :class="ciudadValidationClasses">
-        <label class="control-label" for="desc"> Ciudad </label>
+        <label class="teal-text control-label" for="desc"> Ciudad </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="desc" value="Ciudad" :disabled="!editing && !addingNew" v-model="Aeropuerto.Ciudad"></textarea>
         <p v-if="ciudadError != ''" class="help-block"> {{ciudadError}} </p>
       </div>
       <div :class="paisValidationClasses">
-        <label class="control-label" for="desc"> País </label>
+        <label class="teal-text control-label" for="desc"> País </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis"
         name="desc" value="Pais" :disabled="!editing && !addingNew" v-model="Aeropuerto.Pais"></textarea>
         <p v-if="paisError != ''" class="help-block"> {{paisError}} </p>
@@ -31,7 +31,7 @@
     <div>
       <template v-if="!addingNew">
         <div style="float: left">
-          <button type="button" class="btn btn-default btn-sm" title="Nuevo" @click="editNew" :disabled="editing">
+          <button type="button" class="waves-effect waves-light btn teal" title="Nuevo" @click="editNew" :disabled="editing">
             <app-icon img="plus"></app-icon> Nuevo
           </button>
         </div>
@@ -39,10 +39,10 @@
 
       <template v-else>
         <div style="float: left">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateNew" :disabled="!allModified">
+          <button type="button" class="waves-effect waves-light btn teal" title="Confirmar" @click="validateNew" :disabled="!allModified">
             <app-icon img="ok"></app-icon> Confirmar
           </button>
-          <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discardNew">
+          <button type="button" class="waves-effect waves-light btn teal" title="Descartar" @click="discardNew">
             <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>
@@ -50,10 +50,10 @@
 
       <template v-if="!editing">
         <div style="float: right">
-          <button type="button" class="btn btn-default btn-sm" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
+          <button type="button" class="waves-effect waves-light btn teal" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
             <app-icon img="edit"></app-icon> Editar
           </button>
-          <button type="button" class="btn btn-default btn-sm" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
+          <button type="button" class="waves-effect waves-light btn teal" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
             <app-icon img="trash"></app-icon> Eliminar
           </button>
         </div>
@@ -61,10 +61,10 @@
 
       <template v-else>
         <div style="float: right">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateUpdate" :disabled="!anyModified">
+          <button type="button" class="waves-effect waves-light btn teal" title="Confirmar" @click="validateUpdate" :disabled="!anyModified">
             <app-icon img="ok"></app-icon> Confirmar
           </button>
-          <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discard">
+          <button type="button" class="waves-effect waves-light btn teal" title="Descartar" @click="discard">
             <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>

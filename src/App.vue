@@ -2,11 +2,11 @@
   <div id="app">
     <chooser></chooser>
 
-    <h2 v-show="opcion == 'aeropuertos'"><strong>{{ title.Aeropuertos }}</strong></h2>
+    <h2 class="teal-text" v-show="opcion == 'aeropuertos'"><strong>{{ title.Aeropuertos }}</strong></h2>
     <maestro-aeropuerto v-show="opcion == 'aeropuertos'"></maestro-aeropuerto>
     <detalle-aeropuerto v-show="opcion == 'aeropuertos'"></detalle-aeropuerto>
 
-    <h2 v-show="opcion == 'vuelos'"><strong>{{ title.Vuelos }}</strong></h2>
+    <h2 class="teal-text" v-show="opcion == 'vuelos'"><strong>{{ title.Vuelos }}</strong></h2>
     <maestro-vuelo v-show="opcion == 'vuelos'"></maestro-vuelo>
     <detalle-vuelo v-show="opcion == 'vuelos'"></detalle-vuelo>
 

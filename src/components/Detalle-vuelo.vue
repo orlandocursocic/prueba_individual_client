@@ -1,39 +1,39 @@
 <template>
-  <div class="w3-container w3-card-4" style="min-width:500px; display:inline-block; vertical-align:top">
+  <div class="w3-container w3-card-4 teal lighten-5" style="min-width:700px; display:inline-block; vertical-align:top">
     <div>
-      <h3 style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Vuelo: </strong>{{Vuelo.CodigoVuelo}}</h3>
+      <h3 class="teal-text" style="overflow: hidden; text-overflow: ellipsis; max-width:300px"><strong>Vuelo: </strong>{{Vuelo.CodigoVuelo}}</h3>
       <div :class="codigoVueloValidationClasses">
-        <label class="control-label" for="codVuelo"> Código de Vuelo </label>
+        <label class="teal-text control-label" for="codVuelo"> Código de Vuelo </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
         name="codVuelo" value="codVuelo" :disabled="!editing && !addingNew" v-model="Vuelo.CodigoVuelo"></textarea>
         <p v-if="codigoVueloError != ''" class="help-block"> {{codigoVueloError}} </p>
       </div>
       <div :class="companyiaValidationClasses">
-        <label class="control-label" for="companyia"> Compañía </label>
+        <label class="teal-text control-label" for="companyia"> Compañía </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
         name="companyia" value="companyia" :disabled="!editing && !addingNew" v-model="Vuelo.Companyia"></textarea>
         <p v-if="companyiaError != ''" class="help-block"> {{companyiaError}} </p>
       </div>
       <div :class="origenValidationClasses">
-        <label class="control-label" for="origin"> Aeropuerto de origen </label>
+        <label class="teal-text control-label" for="origin"> Aeropuerto de origen </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
         name="origin" value="origin" :disabled="!editing && !addingNew" v-model="Vuelo.Origen"></textarea>
         <p v-if="origenError != ''" class="help-block"> {{origenError}} </p>
       </div>
       <div :class="destinoValidationClasses">
-        <label class="control-label" for="destination"> Aeropuerto de destino </label>
+        <label class="teal-text control-label" for="destination"> Aeropuerto de destino </label>
         <textarea class="form-control" rows="1" style="resize: none; overflow: auto; text-overflow: ellipsis" type="string"
         name="destination" value="destination" :disabled="!editing && !addingNew" v-model="Vuelo.Destino"></textarea>
         <p v-if="destinoError != ''" class="help-block"> {{destinoError}} </p>
       </div>
       <div :class="fechaSalidaValidationClasses">
-        <label class="control-label" for="fechaSalida"> Fecha y hora de Salida </label>
+        <label class="teal-text control-label" for="fechaSalida"> Fecha y hora de Salida </label>
         <input class="form-control" style="overflow: hidden; text-overflow: ellipsis" type="datetime-local"
         name="fechaSalida" value="fechaSalida" :disabled="!editing && !addingNew" v-model="Vuelo.FechaSalida">
         <p v-if="fechaSalidaError != ''" class="help-block"> {{fechaSalidaError}} </p>
       </div>
       <div :class="fechaLlegadaValidationClasses">
-        <label class="control-label" for="fechaLlegada"> Fecha y hora de Llegada</label>
+        <label class="teal-text control-label" for="fechaLlegada"> Fecha y hora de Llegada</label>
         <input class="form-control" style="overflow: hidden; text-overflow: ellipsis" type="datetime-local"
         name="fechaLlegada" value="fechaLlegada" :disabled="!editing && !addingNew" v-model="Vuelo.FechaLlegada">
         <p v-if="fechaLlegadaError != ''" class="help-block"> {{fechaLlegadaError}} </p>
@@ -43,7 +43,7 @@
     <div>
       <template v-if="!addingNew">
         <div style="float: left">
-          <button type="button" class="btn btn-default btn-sm" title="Nuevo" @click="editNew" :disabled="editing">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Nuevo" @click="editNew" :disabled="editing">
             <app-icon img="plus"></app-icon> Nuevo
           </button>
         </div>
@@ -51,10 +51,10 @@
 
       <template v-else>
         <div style="float: left">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateNew" :disabled="!allModified">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Confirmar" @click="validateNew" :disabled="!allModified">
             <app-icon img="ok"></app-icon> Confirmar
           </button>
-          <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discardNew">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Descartar" @click="discardNew">
             <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>
@@ -62,10 +62,10 @@
 
       <template v-if="!editing">
         <div style="float: right">
-          <button type="button" class="btn btn-default btn-sm" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Editar" @click="validateIdUpdate" :disabled="addingNew">
             <app-icon img="edit"></app-icon> Editar
           </button>
-          <button type="button" class="btn btn-default btn-sm" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Eliminar" @click="validateIdDelete" :disabled="addingNew">
             <app-icon img="trash"></app-icon> Eliminar
           </button>
         </div>
@@ -73,10 +73,10 @@
 
       <template v-else>
         <div style="float: right">
-          <button type="button" class="btn btn-default btn-sm" title="Confirmar" @click="validateUpdate" :disabled="!anyModified">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Confirmar" @click="validateUpdate" :disabled="!anyModified">
             <app-icon img="ok"></app-icon> Confirmar
           </button>
-          <button type="button" class="btn btn-default btn-sm" title="Descartar" @click="discard">
+          <button type="button" class="waves-effect waves-light btn btn-default btn-sm" title="Descartar" @click="discard">
             <app-icon img="remove"></app-icon> Cancelar
           </button>
         </div>

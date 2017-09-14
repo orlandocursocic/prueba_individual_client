@@ -1,8 +1,8 @@
 <template>
-  <div style="min-width:400px; max-width:300px; display:inline-block; vertical-align:top">
+  <div class="teal lighten-5" style="min-width:300px; max-width:300px; display:inline-block; vertical-align:top">
     <ul class="w3-ul w3-card-4">
-      <li><h3><strong>Vuelos</strong></h3></li>
-      <li style="overflow: hidden; text-overflow: ellipsis" class="w3-hover-blue" v-for="Vuelo in Vuelos" @click="vueloSelected(Vuelo.Id)">
+      <li class="teal-text" ><h3><strong>Vuelos</strong></h3></li>
+      <li style="overflow: hidden; text-overflow: ellipsis" class="teal-text w3-hover-teal" v-for="Vuelo in Vuelos" @click="vueloSelected(Vuelo.Id)">
         {{Vuelo.CodigoVuelo}}</li>
     </ul>
   </div>
